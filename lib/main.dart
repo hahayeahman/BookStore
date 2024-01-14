@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import 'cart_page.dart';
+import 'login_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -11,18 +12,14 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        primaryColor: Colors.deepPurple,
-        fontFamily: 'Roboto',
-      ),
-      home: MyHomePage(),
+    return const MaterialApp(
+      home: LoginPage(),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+  const MyHomePage({super.key});
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -61,72 +58,47 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Books',
-          style: TextStyle(
-            color: Colors.purple,
-            fontWeight: FontWeight.w300,
-            fontSize: 40,
-            letterSpacing: 1.5,
-          ),
+        backgroundColor: Colors.deepPurple,
+        title: const Text(
+          'BOOK STORE',
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900),
         ),
       ),
       body: ListView.builder(
         itemCount: data.length,
         itemBuilder: (context, index) {
-          return Card(
-            elevation: 5,
-            margin: const EdgeInsets.all(10),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
+          return Padding(
+            padding: const EdgeInsets.all(10.0),
             child: ListTile(
-              contentPadding: const EdgeInsets.all(16),
-              leading: ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: Image.asset(
-                  images[index],
-                  width: 80,
-                  height: 120,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              title: Text(
-                '${data[index]['bookname']}',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 18,
-                ),
-              ),
-              subtitle: Text(
-                'Price: \$${data[index]['price']}',
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16,
-                ),
-              ),
               trailing: GestureDetector(
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => CardPage(
-                      bookName: data[index]['bookname'],
-                      bookId: data[index]['id'],
-                      price: data[index]['price'],
-                      image: images[index],
-                    ),
-                  ));
+                      builder: (context) => CardPage(
+                            bookName: data[index]['bookname'],
+                            bookId: data[index]['id'],
+                            price: data[index]['price'],
+                            image: images[index],
+                          )));
                 },
-                child: Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: Colors.deepPurple,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: const Icon(
-                    Icons.shopping_cart_outlined,
-                    color: Colors.white,
-                  ),
+                child: const Icon(
+                  Icons.shopping_cart_outlined,
+                  color: Colors.white,
                 ),
+              ),
+              tileColor: Colors.deepPurple,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              leading: Image.asset(
+                images[index],
+                fit: BoxFit.cover,
+              ),
+              title: Text(
+                'Book Name: ${data[index]['bookname']}\nPrice: ${data[index]['price']}\$',
+                style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w900,
+                    fontSize: 18),
               ),
             ),
           );

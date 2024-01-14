@@ -1,0 +1,7 @@
+CREATE TABLE UserBooks (
+    user_id INTEGER,
+    book_id INTEGER,
+    FOREIGN KEY (user_id) REFERENCES Users(user_id),
+    FOREIGN KEY (book_id) REFERENCES Bookstore(book_id),
+    PRIMARY KEY (user_id, book_id)
+)
